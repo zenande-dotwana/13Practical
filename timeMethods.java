@@ -25,4 +25,32 @@ public class timeMethods {
         // Create sorted copy for binary search
         sortedRecords = records.clone();
         Arrays.sort(sortedRecords, (a, b) -> Integer.compare(a.key, b.key));
+
+         // Generate 30 random keys for testing
+        int[] testKeys = generateRandomKeys(30, 1, 32654);
+        
+        System.out.println("Starting timing experiments with " + repetitions + " repetitions...");
+        System.out.println("Each repetition performs 30 key lookups");
+        System.out.println("------------------------------------------------");
+        
+        for(repetition = 0; repetition < repetitions; repetition++) {
+            // Time linear search
+            start = System.currentTimeMillis();
+            for(int key : testKeys) {
+                linearSearch(key);
+            }
+            finish = System.currentTimeMillis();
+            time = (double)(finish - start);
+            linearRunTime += time;
+            linearRunTime2 += (time * time);
+            
+            // Time binary search
+            start = System.currentTimeMillis();
+            for(int key : testKeys) {
+                binarySearch(key);
+            }
+            finish = System.currentTimeMillis();
+            time = (double)(finish - start);
+            binaryRunTime += time;
+            binaryRunTime2 += (time * time);
         
