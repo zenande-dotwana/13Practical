@@ -148,6 +148,48 @@ public class timeMethods {
         System.out.println("Created " + records.length + " sample records for testing");
     }
     
+    // Generate random keys
+    static int[] generateRandomKeys(int count, int min, int max) {
+        int[] keys = new int[count];
+        Random rand = new Random();
+        for (int i = 0; i < count; i++) {
+            keys[i] = min + rand.nextInt(max - min + 1);
+        }
+        return keys;
+    }
+    
+    // Shuffle array of keys
+    static void shuffleArray(int[] array) {
+        Random rand = new Random();
+        for (int i = array.length - 1; i > 0; i--) {
+            int index = rand.nextInt(i + 1);
+            int temp = array[index];
+            array[index] = array[i];
+            array[i] = temp;
+        }
+    }
+    
+    // Linear search implementation
+    static String linearSearch(int key) {
+        for (Node node : records) {
+            if (node.key == key) {
+                return node.data;
+            }
+        }
+        return null; // Key not found
+    }
+    
+    // Binary search implementation
+    static String binarySearch(int key) {
+        int left = 0;
+        int right = sortedRecords.length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (sortedRecords[mid].key == key) {
+                return sortedRecords[mid].data;
+            }
 
         
         
