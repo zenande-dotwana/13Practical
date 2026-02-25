@@ -80,4 +80,74 @@ public class timeMethods {
         System.out.println("  Standard deviation: " + fourD.format(binaryStdDeviation) + " ms");
         System.out.println("------------------------------------------------");
         System.out.println("\nFour required numbers for submission:");
+
+        System.out.println("1. Linear Search Average: " + fourD.format(linearAveRuntime));
+        System.out.println("2. Linear Search Std Dev: " + fourD.format(linearStdDeviation));
+        System.out.println("3. Binary Search Average: " + fourD.format(binaryAveRuntime));
+        System.out.println("4. Binary Search Std Dev: " + fourD.format(binaryStdDeviation));
+    }
+    
+    // Node class to hold key and data
+    static class Node {
+        int key;
+        String data;
+        
+        Node(int key, String data) {
+            this.key = key;
+            this.data = data;
+        }
+    }
+    
+    // Load data from file
+    static void loadData(String filename) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            ArrayList<Node> nodeList = new ArrayList<>();
+            String line;
+            
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty()) continue;
+                
+                // Assuming format: "key data" or "key: data" or similar
+                String[] parts = line.split("\\s+", 2);
+                if (parts.length >= 2) {
+                    try {
+                        int key = Integer.parseInt(parts[0]);
+                        String data = parts[1];
+                        nodeList.add(new Node(key, data));
+                    } catch (NumberFormatException e) {
+                        // Skip lines that don't start with a number
+                        continue;
+                    }
+                }
+            }
+            reader.close();
+            
+            // Convert ArrayList to array
+            records = nodeList.toArray(new Node[0]);
+            System.out.println("Loaded " + records.length + " records from " + filename);
+            
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: File " + filename + " not found!");
+            System.err.println("Creating sample data for testing...");
+            createSampleData();
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            createSampleData();
+        }
+    }
+    
+    // Create sample data if file not found
+    static void createSampleData() {
+        records = new Node[1000];
+        for (int i = 0; i < 1000; i++) {
+            int key = 1 + (int)(Math.random() * 32654);
+            records[i] = new Node(key, "Sample data for key " + key);
+        }
+        System.out.println("Created " + records.length + " sample records for testing");
+    }
+    
+
+        
         
